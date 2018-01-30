@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-bole login [Session]
+bole login [requests.Session keep cookie]
 update on 2018-01-25
 @author: tx
 '''
