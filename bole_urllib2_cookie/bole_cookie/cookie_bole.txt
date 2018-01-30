@@ -1,0 +1,7 @@
+# Netscape HTTP Cookie File
+# http://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+.jobbole.com	TRUE	/	FALSE		wordpress_logged_in_0efdf49af511fd88681529ef8c2e5fbf	helloworld_123%7C1485077658%7Cwofr5txAyDHdIXJDgBu0hp4Bow2ovJDUMGtUtONwcnl%7C82def226e485c393e15d95fa710614788b25f14d7e3bbcfe85e4ebb816d96c02
+.jobbole.com	TRUE	/wp-admin	FALSE		wordpress_0efdf49af511fd88681529ef8c2e5fbf	helloworld_123%7C1485077658%7Cwofr5txAyDHdIXJDgBu0hp4Bow2ovJDUMGtUtONwcnl%7Ccadd7c71939a4477ab40ccec0a6674e55b45f37d65e3c6becb41769539a0d695
+.jobbole.com	TRUE	/wp-content/plugins	FALSE		wordpress_0efdf49af511fd88681529ef8c2e5fbf	helloworld_123%7C1485077658%7Cwofr5txAyDHdIXJDgBu0hp4Bow2ovJDUMGtUtONwcnl%7Ccadd7c71939a4477ab40ccec0a6674e55b45f37d65e3c6becb41769539a0d695
