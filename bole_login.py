@@ -10,6 +10,7 @@ import json
 import requests
 from requests import Session
 from lxml import html
+from bs4 import BeautifulSoup
 import time
 import pprint
 reload(sys)
@@ -28,7 +29,41 @@ def write_date_2file(path, fname, data,):
     return True
 
 
-def is_login():
+def is_login_douban_test():
+    url_login = '''https://www.douban.com/'''
+    headers_login = {
+            'user-agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:58.0) Gecko/20100101 Firefox/58.0'
+            }
+
+    login_session = requests.Session()
+
+    #get code_request
+    response = login_session.get(url_login, verify=False)
+    soup = BeautifulSoup(response.content, "html.parser")
+    captcha_id = soup.find('input',{'name':'captcha-id'})['value']
+
+    #get code
+    codeurl = "https://www.douban.com/misc/captcha?id=%s&size=s"%captcha_id
+    valcode = login_session.get(codeurl)
+    f = open('valcode.png', 'wb')
+    f.write(valcode.content)
+    f.close()
+
+    code = input('please input code:')
+    print "^^^"*10
+    print code
+    print captcha_id
+    login_data['captcha-id'] = str(captcha_id)
+    login_data['captcha-solution'] = code
+
+    response = login_session.post(url_login, data = login_data, headers = headers_login, verify=False)
+
+    if response.status_code != 200:
+        print "response status_code: ", response.status_code, type(response.status_code)
+        return None
+
+
+def is_login_bole():
     url_login = '''http://www.jobbole.com/wp-admin/admin-ajax.php'''
 
     login_data = {
@@ -42,26 +77,6 @@ def is_login():
 
     login_session = requests.Session()
 
-    # #get code_request
-    # response = login_session.get(url_login, verify=False)
-    # soup = BeautifulSoup(response.content, "html.parser")
-    # captcha_id = soup.find('input',{'name':'captcha-id'})['value']
-
-    # #get code
-    # codeurl = "https://www.douban.com/misc/captcha?id=%s&size=s"%captcha_id
-    # valcode = login_session.get(codeurl)
-    # f = open('valcode.png', 'wb')
-    # f.write(valcode.content)
-    # f.close()
-
-    # code = input('please input code:')
-    # print "^^^"*10
-    # print code
-    # print captcha_id
-    # login_data['captcha-id'] = str(captcha_id)
-    # login_data['captcha-solution'] = code
-
-    # response = login_session.post(url_login, data = login_data, headers = headers_login, verify=False)
     login_page = login_session.post(url_login, data = login_data, headers = headers_login)
 
     if login_page.status_code != 200:
@@ -81,11 +96,12 @@ def is_login():
         print e
         return None
 
+
 def get_request(is_session, url=None):
     print "get mew request"
 
-    get_url = 'http://hao.jobbole.com/'
-    response = is_session.get(get_url)
+    url = 'http://hao.jobbole.com/'
+    response = is_session.get(url)
     ret = write_date_2file('./html/', 'hao.html', response.text)
     if ret:
         print "write html success"
@@ -99,8 +115,14 @@ def get_request(is_session, url=None):
     str1 = tree.xpath('//div[@class="list-rs"]//h2/a[@href]/text()')
     print str1
 
+
+
+def test():
+    my_session = is_login_douban_test()
+
+
 def main():
-    my_session = is_login()
+    my_session = is_login_bole()
 
     if not my_session:
         print "no login session"
@@ -111,3 +133,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # test()
